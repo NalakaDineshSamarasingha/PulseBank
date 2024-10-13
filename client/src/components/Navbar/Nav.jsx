@@ -1,0 +1,47 @@
+import { useState } from 'react'
+import { NavLink } from 'react-router-dom'
+import { ReactComponent as Hamburger } from '../../assets/hamburger.svg'
+import './Nav.css'
+
+const Nav = () => {
+  const [showNavbar, setShowNavbar] = useState(false)
+
+  const handleShowNavbar = () => {
+    setShowNavbar(!showNavbar)
+  }
+
+  return (
+    <nav className="navbar">
+      <div className="container">
+        <div className="logo">
+          <p><span>P</span>ulse<span>B</span>ank</p>
+        </div>
+        <div className="menu-icon" onClick={handleShowNavbar}>
+          <Hamburger />
+        </div>
+        <div className={`nav-elements  ${showNavbar && 'active'}`}>
+          <ul>
+            <li>
+              <NavLink to="/">Home</NavLink>
+            </li>
+            <li>
+              <NavLink to="/blog">Services</NavLink>
+            </li>
+            <li>
+              <NavLink to="/projects">Contact</NavLink>
+            </li>
+            <li>
+              <NavLink to="/about">About us</NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact"><p className='button'>Register</p></NavLink>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+    </nav>
+  )
+}
+
+export default Nav
