@@ -1,0 +1,30 @@
+.slider-container{
+    width: 100%;
+    background: #fefafa;
+}
+.campaign-slider {
+
+  padding: 3rem 0;
+  width: 80%;
+  margin: auto;
+  span{
+    color: #E70606;
+  }
+}
+
+.slick-slide {
+  padding: 10px;
+}
+
+.slick-prev,
+.slick-next {
+  background-color: #E70606;
+  border-radius: 50%;
+}
+.slider-title{
+    font-size: 2rem;
+    font-weight: 500;
+    text-align: center;
+    margin: 2rem 0;
+
+}
