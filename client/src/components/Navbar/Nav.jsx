@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as Hamburger } from '../../assets/hamburger.svg'
+import {ReactComponent as Close} from '../../assets/close.svg'
 import './Nav.css'
 
 const Nav = () => {
@@ -17,7 +18,8 @@ const Nav = () => {
           <p><span>P</span>ulse<span>B</span>ank</p>
         </div>
         <div className="menu-icon" onClick={handleShowNavbar}>
-          <Hamburger />
+          {!showNavbar ? <Hamburger /> : <Close/>}
+          
         </div>
         <div className={`nav-elements  ${showNavbar && 'active'}`}>
           <ul>

@@ -3,12 +3,20 @@
 @tailwind components;
 @tailwind utilities;
 
+.desk{
+    display: block;
+}
+.mobo{
+    display: none;
+}
+
 .img{
     width: 90%;
 }
 .hero-container{
     margin-top: 2%;
     max-width: 100vw;
+    height: 80vh;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -23,13 +31,31 @@
     text-indent: 2px;
 }
 .welcome{
-    margin-bottom: 2%;
     font-size: 2.8rem;
-    font-weight: 500;
+    font-weight: 700;
+    line-height: 1;
     span{
         color: #E70606;
-        font-weight: 600;
+        font-weight: 800;
     }
+}
+.gr{
+    text-transform: uppercase;
+}
+h3{
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 2%;
+    line-height: 1;
+    span{
+        font-weight: 700;
+        color: #E70606;
+    }
+}
+.hash{
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #E70606;
 }
 .button{
     outline: none;
@@ -49,6 +75,7 @@
     margin-top: 4%;
     display: flex;
     gap: 2rem;
+    z-index: 0;
 }
 
 @media (max-width: 1000px){
@@ -57,5 +84,28 @@
     }
     .about{
         font-size: 1rem;
+    }
+}
+@media (max-width: 600px){
+    .hero-container{
+        display: block;
+    }
+    .desk{
+        display: none;
+    }
+    .mobo{
+        display: block;
+    }
+    .welcome{
+        font-size: 1.5rem;
+    }
+    .about{
+        width: 100%;
+    }
+    .btn{
+        padding: 0.5rem 1rem;
+    }
+    .button-container{
+        flex-direction: column;
     }
 }
