@@ -1,0 +1,16 @@
+input,textarea{
+    border: 1px solid black;
+    border-radius: 0.2rem;
+    padding: 0.5rem 1rem;
+}
+.x{
+    width: 50%;
+}
+.send{
+    opacity: 1;
+    padding: 1rem 3rem;
+    background: #E70606;
+    width: fit-content;
+    color: white;
+    border-radius: 0.2rem;
+}

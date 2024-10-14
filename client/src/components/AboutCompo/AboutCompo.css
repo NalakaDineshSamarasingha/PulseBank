@@ -1,0 +1,33 @@
+.image-container {
+    position: relative;
+    text-align: center;
+}
+
+.image-container img {
+    width: 100vw;
+    height: auto;
+}
+
+.about-header {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%); 
+    background: rgba(0, 0, 0, 0.8); 
+    color: white;
+    padding: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    opacity: 0.9;
+    width: 100%; 
+}
+
+.about-title {
+    font-size: 1.6rem;
+}
+
+.about-description {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+}

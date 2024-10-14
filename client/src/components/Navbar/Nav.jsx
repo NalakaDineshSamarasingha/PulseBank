@@ -27,16 +27,16 @@ const Nav = () => {
               <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <NavLink to="/blog">Services</NavLink>
+              <NavLink to="/service">Donate</NavLink>
             </li>
             <li>
-              <NavLink to="/projects">Contact</NavLink>
+              <NavLink to="/contact">Contact</NavLink>
             </li>
             <li>
               <NavLink to="/about">About us</NavLink>
             </li>
             <li>
-              <NavLink to="/contact"><p className='button'>Register</p></NavLink>
+              <NavLink to="/register"><p className='button'>Register</p></NavLink>
             </li>
           </ul>
         </div>
