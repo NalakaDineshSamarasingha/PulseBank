@@ -24,8 +24,7 @@ function LoginCompo() {
         setError("");
         alert("Login Successful!");
         
-        // Navigate to another page after successful login
-        navigate("/dashboard");  // Replace with the actual route you want to redirect to
+        navigate("/dashboard");  
       }
     } catch (err) {
       setError("Invalid email or password");

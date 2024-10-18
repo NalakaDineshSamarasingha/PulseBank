@@ -35,34 +35,73 @@ service /api on new http:Listener(9090) {
         }
     }
 
-     resource function post login(http:Caller caller, http:Request req) returns error? {
-        json? body = check req.getJsonPayload();
-        string email = (check body?.email).toString();
-        string password = (check body?.password).toString();
+    //  resource function post login(http:Caller caller, http:Request req) returns error? {
+    //     json? body = check req.getJsonPayload();
+    //     string email = (check body?.email).toString();
+    //     string password = (check body?.password).toString();
 
-        if (email == "" || password == "") {
-            check caller->respond({ message: "Username or Password cannot be empty" });
-            return;
-        }
+    //     if (email == "" || password == "") {
+    //         check caller->respond({ message: "Username or Password cannot be empty" });
+    //         return;
+    //     }
 
-        boolean|error loginResult = checkLogin(email, password);
+    //     boolean|error loginResult = checkLogin(email, password);
 
-        if (loginResult is error) {
-            log:printError("Error while checking login credentials", loginResult);
-            check caller->respond({ message: "Internal Server Error" });
-        } else if (loginResult) {
-             string|error token = generateJwtToken(email);
+    //     if (loginResult is error) {
+    //         log:printError("Error while checking login credentials", loginResult);
+    //         check caller->respond({ message: "Internal Server Error" });
+    //     } else if (loginResult) {
+    //          string|error token = generateJwtToken(email);
 
-             if (token is error) {
-            check caller->respond({ message: "Failed to generate token" });
-            return;
+    //          if (token is error) {
+    //         check caller->respond({ message: "Failed to generate token" });
+    //         return;
+    //         }
+    //          check caller->respond({
+    //             message: "Login Successful",
+    //             token: token
+    //         });
+    //     } else {
+    //         check caller->respond({ message: "Invalid username or password" });
+    //     }
+    // }
+
+
+    resource function post login(http:Caller caller, http:Request req) returns error? {
+    json? body = check req.getJsonPayload();
+    string email = (check body?.email).toString();
+    string password = (check body?.password).toString();
+
+    if (email == "" || password == "") {
+        check caller->respond({ message: "Username or Password cannot be empty" });
+        return;
+    }
+
+    [boolean, string]|error loginResult = check checkLogin(email, password);
+
+    if (loginResult is error) {
+        log:printError("Error while checking login credentials", loginResult);
+        check caller->respond({ message: "Internal Server Error" });
+    } else {
+        boolean loginSuccessful = loginResult[0];
+        string userType = loginResult[1];
+        
+        if (loginSuccessful) {
+            string|error token = generateJwtToken(email);
+
+            if (token is error) {
+                check caller->respond({ message: "Failed to generate token" });
+                return;
             }
-             check caller->respond({
+            check caller->respond({
                 message: "Login Successful",
-                token: token
+                token: token,
+                userType: userType
             });
         } else {
             check caller->respond({ message: "Invalid username or password" });
         }
     }
+}
+
 }

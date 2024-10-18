@@ -38,22 +38,46 @@ function getCampaignData() returns Campaign[] | sql:Error {
     }
     return campaigns;
 }
-function checkLogin(string email, string password) returns boolean|error {
-    sql:ParameterizedQuery query = `SELECT * FROM users WHERE email = ${email} AND userpassword = ${password}`;
+// function checkLogin(string email, string password) returns boolean|error {
+//     sql:ParameterizedQuery query = `SELECT * FROM users WHERE email = ${email} AND userpassword = ${password}`;
+
+//     stream<User, sql:Error?> userStream = dbClient->query(query, User);
+
+//     boolean loginSuccessful = false;
+
+//     error? e = userStream.forEach(function (User user) {
+//         loginSuccessful = true;
+//     });
+
+//     if (e is sql:Error) {
+//         return e;
+//     }
+//     return loginSuccessful;
+// }
+function checkLogin(string email, string password) returns [boolean, string]|error {
+    sql:ParameterizedQuery query = `SELECT userType FROM users WHERE email = ${email} AND userpassword = ${password}`;
 
     stream<User, sql:Error?> userStream = dbClient->query(query, User);
 
     boolean loginSuccessful = false;
+    string userType = "";
 
     error? e = userStream.forEach(function (User user) {
         loginSuccessful = true;
+        userType = user.userType; 
     });
 
     if (e is sql:Error) {
         return e;
     }
-    return loginSuccessful;
+
+    if (loginSuccessful) {
+        return [true, userType];
+    } else {
+        return [false, ""]; 
+    }
 }
+
 
 function generateJwtToken(string email) returns string|error {
     jwt:IssuerConfig issuerConfig = {

@@ -2,8 +2,8 @@
 type User record {
     string email;
     string userpassword;
-    string userType;
-    int id;
+    string userType = "";
+    int id = -1;
 };
 
 type Campaign record {
