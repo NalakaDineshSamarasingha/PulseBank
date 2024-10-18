@@ -19,7 +19,7 @@ function Home() {
   useEffect(() => {
     const fetchCampaignData = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/campaign'); 
+        const response = await fetch('http://localhost:9090/api/campaign'); 
         const data = await response.json();
         setCampaignData(data);
       } catch (error) {

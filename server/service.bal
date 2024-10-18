@@ -1,5 +1,7 @@
 import ballerina/http;
 import ballerina/sql;
+import ballerina/log;
+
 
 @http:ServiceConfig{
     cors: {
@@ -7,21 +9,60 @@ import ballerina/sql;
     }
 }
 
-service / on new http:Listener(9090) {
+service /api on new http:Listener(9090) {
     resource function get HelloWorld(string? name) returns string|error {
         if name is () {
             return error("name should not be empty!");
         }
         return string `Hello, ${name}`;
     }
-     resource function post addUser(string name) returns http:Ok | http:InternalServerError {
+
+    resource function post addUser(string name) returns http:Ok | http:InternalServerError {
         sql:ExecutionResult | error result = insertData(name);
-        if result is sql:ExecutionResult{
+        if result is sql:ExecutionResult {
             return http:OK;
         }
         return http:INTERNAL_SERVER_ERROR;
-     }
-     resource function get data() {
-        
-     }
+    }
+
+    resource function get campaign(http:Caller caller, http:Request req) returns error? {
+        sql:Error | Campaign[] result = getCampaignData();
+        if result is sql:Error {
+            log:printError("Failed to fetch campaign data", result);
+            check caller->respond({ message: "Internal Server Error" });
+        } else {
+            check caller->respond(result.toJson());
+        }
+    }
+
+     resource function post login(http:Caller caller, http:Request req) returns error? {
+        json? body = check req.getJsonPayload();
+        string email = (check body?.email).toString();
+        string password = (check body?.password).toString();
+
+        if (email == "" || password == "") {
+            check caller->respond({ message: "Username or Password cannot be empty" });
+            return;
+        }
+
+        boolean|error loginResult = checkLogin(email, password);
+
+        if (loginResult is error) {
+            log:printError("Error while checking login credentials", loginResult);
+            check caller->respond({ message: "Internal Server Error" });
+        } else if (loginResult) {
+             string|error token = generateJwtToken(email);
+
+             if (token is error) {
+            check caller->respond({ message: "Failed to generate token" });
+            return;
+            }
+             check caller->respond({
+                message: "Login Successful",
+                token: token
+            });
+        } else {
+            check caller->respond({ message: "Invalid username or password" });
+        }
+    }
 }
