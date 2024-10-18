@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as Hamburger } from '../../assets/hamburger.svg'
 import {ReactComponent as Close} from '../../assets/close.svg'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser, faMagnifyingGlass, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import './Nav.css'
 
 const Nav = () => {
@@ -35,10 +37,8 @@ const Nav = () => {
             <li>
               <NavLink to="/about">About us</NavLink>
             </li>
-            <li>
-              <NavLink to="/register"><p className='button'>Register</p></NavLink>
-            </li>
           </ul>
+          <NavLink to="/login"><FontAwesomeIcon icon={faUser}  className='icon' size='xl'/></NavLink>
         </div>
       </div>
       

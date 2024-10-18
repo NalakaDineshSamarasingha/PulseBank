@@ -1,6 +1,6 @@
 import React from "react";
 import "./Hero.css";
-import Hero_img from "../../assets/HeroImage.png";
+import Hero_img from "../../assets/2707649.jpg";
 
 function Hero() {
   return (
@@ -21,8 +21,10 @@ function Hero() {
         </p>
         <div className="button-container">
           <button class="group relative inline-block overflow-hidden rounded border-2  border-[#E70606] px-8 py-3 font-medium text-white bg-[#E70606]">
+            <a href="/service">
             <span class="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-white transition-all duration-300 ease-out group-hover:w-full"></span>
             <span class="relative group-hover:text-[#E70606] ">Donate Blood + </span>
+            </a>
           </button>
           <button class="group relative inline-block overflow-hidden rounded border-2 border-[#E70606] px-8 py-3 font-medium text-[#E70606]">
             <span class="absolute left-0 top-0 mb-0 flex h-full w-0 translate-x-0 transform bg-[#E70606] opacity-90 transition-all duration-300 ease-out group-hover:w-full"></span>

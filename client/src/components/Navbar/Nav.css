@@ -20,7 +20,7 @@ body {
     position: sticky;
     top: 0;
     background: white;
-    z-index: 1;
+    z-index: 2000;
     padding: 1.5rem 3rem;
     border: 1px solid #d8d8d8;
 }
@@ -38,11 +38,15 @@ ul {
     justify-content: center;
     align-items: center;
 }
-
+.nav-elements{
+  display: flex;
+  gap: 6rem;
+}
 .nav-elements ul {
   display: flex;
   justify-content: space-between;
   list-style-type: none;
+  text-transform: uppercase;
 }
 
 .nav-elements ul li:not(:last-child) {
@@ -50,7 +54,7 @@ ul {
 }
 
 .nav-elements ul a {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
   color: #2f234f;
   text-decoration: none;
@@ -77,6 +81,7 @@ ul {
     color: white;
     background: #E70606;
     border-radius: 0.5rem;
+    border: none;
 }
 
 p{
@@ -87,6 +92,8 @@ p span{
     color: #E70606;
     font-weight: 700;
 }
+
+
 
 @media (max-width: 768px) {
   .nav-elements ul li:not(:last-child) {

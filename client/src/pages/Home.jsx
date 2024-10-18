@@ -2,7 +2,6 @@ import React, { Suspense, useState, useEffect } from 'react';
 import Nav from '../components/Navbar/Nav';
 import Hero from '../components/Hero/Hero';
 
-
 const Volunteer = React.lazy(() => import('../components/Volunteer/Volunteer'));
 const Campaign = React.lazy(() => import('../components/Campaign/Campaign'));
 const Stats = React.lazy(() => import('../components/Stats/Stats'));
@@ -13,6 +12,25 @@ function Home() {
     campaign: false,
     stats: false
   });
+
+  const [campaignData, setCampaignData] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCampaignData = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/campaign'); 
+        const data = await response.json();
+        setCampaignData(data);
+      } catch (error) {
+        console.error('Error fetching campaign data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCampaignData();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -43,7 +61,9 @@ function Home() {
       </div>
       <div id="campaign">
         <Suspense fallback={<div>Loading Campaign...</div>}>
-          {isInView.campaign && <Campaign />}
+          {isInView.campaign && (
+            loading ? <div>Loading Campaign...</div> : <Campaign data={campaignData} />
+          )}
         </Suspense>
       </div>
       <div id="stats">

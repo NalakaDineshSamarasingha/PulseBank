@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './Campaign.css'; 
 
-function Campaign() {
+function Campaign({data}) {
   const settings = {
     dots: true,
     infinite: true,

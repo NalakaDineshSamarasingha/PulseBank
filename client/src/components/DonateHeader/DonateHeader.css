@@ -1,0 +1,62 @@
+.help-banner-container {
+  display: flex;
+  justify-content: center;
+  background-color: #fff;
+  padding: 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.help-banner-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20%;
+  height: 100%;
+  background: linear-gradient(175deg, #e70606 80%, #ffffff 100%);
+  z-index: 0;
+}
+
+.help-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 100%;
+  padding: 40px;
+  background-color: #fff;
+  border: 2px solid #e70606;
+  z-index: 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.text-section {
+  flex: 1;
+  margin-right: 10%;
+  z-index: 1;
+}
+
+.highlight-text {
+  color: #e70606;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.main-heading {
+  font-size: 2rem;
+  color: #333;
+  font-weight: bold;
+}
+
+.image-section {
+  flex: 1;
+  z-index: 1;
+}
+
+.volunteer-image {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  object-fit: cover;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
