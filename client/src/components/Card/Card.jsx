@@ -2,7 +2,7 @@ import React from 'react';
 import './Card.css';
 import Card_Image from '../../assets/card.jpg';
 
-function Card({ date, title, address }) {
+function Card({ date, title, address,district }) {
   const formatDate = (inputDate) => {
     const dateObj = new Date(inputDate);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -20,7 +20,7 @@ function Card({ date, title, address }) {
           <button className="btn-on-card">Register Now</button>
         </div>
         <div className="location">
-          <address>{address}</address>
+          <address>{address} <br/> {district}</address>
         </div>
       </div>
       <img src={Card_Image} alt="Header Image" className="w-screen" />
