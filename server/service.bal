@@ -104,4 +104,19 @@ service /api on new http:Listener(9090) {
     }
 }
 
+     resource function get stats(http:Caller caller, http:Request req) returns error? {
+        error | [int, int, int] statsResult = getStatsData();
+        if (statsResult is error) {
+            log:printError("Failed to fetch stats data", statsResult);
+            check caller->respond({ message: "Internal Server Error" });
+        } else {
+            json response = {
+                "donors": statsResult[0],
+                "volunteers": statsResult[1],
+                "pastCampaigns": statsResult[2]
+            };
+            check caller->respond(response);
+        }
+    }
+
 }

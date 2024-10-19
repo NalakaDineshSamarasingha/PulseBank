@@ -7,6 +7,7 @@ import About from './pages/About';
 import Donate from './pages/Donate';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path='/service' element={<Donate/>}/>
         <Route path='/register' element={<SignUp/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/dashboard' element={<AdminPage/>}/>
       </Routes>
       <Footer/>
     </BrowserRouter>

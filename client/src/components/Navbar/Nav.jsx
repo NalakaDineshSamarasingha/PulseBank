@@ -1,17 +1,34 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { ReactComponent as Hamburger } from '../../assets/hamburger.svg'
 import {ReactComponent as Close} from '../../assets/close.svg'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faMagnifyingGlass, faCartShopping } from '@fortawesome/free-solid-svg-icons';
 import './Nav.css'
+import Profile from '../../assets/profile.jpg'
+
 
 const Nav = () => {
-  const [showNavbar, setShowNavbar] = useState(false)
+  const [showNavbar, setShowNavbar] = useState(false);
+  const [profileImage, setProfileImage] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const handleShowNavbar = () => {
     setShowNavbar(!showNavbar)
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    
+    const profileImg = localStorage.getItem('profileImage'); 
+
+    if (token) {
+      setIsLoggedIn(true);
+      if (profileImg) {
+        setProfileImage(profileImg);
+      }
+    }
+  }, []);
 
   return (
     <nav className="navbar">
@@ -38,7 +55,19 @@ const Nav = () => {
               <NavLink to="/about">About us</NavLink>
             </li>
           </ul>
-          <NavLink to="/login"><FontAwesomeIcon icon={faUser}  className='icon' size='xl'/></NavLink>
+          {isLoggedIn ? (
+            <NavLink to="/profile">
+              <img
+                src={profileImage || Profile} 
+                alt="Profile"
+                className="profile-image"
+              />
+            </NavLink>
+          ) : (
+            <NavLink to="/login">
+              <FontAwesomeIcon icon={faUser} className="icon" size="xl" />
+            </NavLink>
+          )}
         </div>
       </div>
       

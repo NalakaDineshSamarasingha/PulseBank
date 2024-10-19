@@ -19,3 +19,7 @@ type Campaign record {
     string No;
     string Address;
 };
+
+type CountResponse record {
+    int count;
+};

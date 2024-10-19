@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Stats.css'
+import './Stats.css';
 
 const useAnimatedNumber = (target, duration = 2000) => {
   const [count, setCount] = useState(0);
@@ -28,13 +28,44 @@ const useAnimatedNumber = (target, duration = 2000) => {
 };
 
 function Stats() {
-  const userTemplateCount = 500;
-  const volunteerTemplateCount = 100;
-  const campaignTemplateCount = 30; 
+  const [userTemplateCount, setUserTemplateCount] = useState(0);
+  const [volunteerTemplateCount, setVolunteerTemplateCount] = useState(0);
+  const [campaignTemplateCount, setCampaignTemplateCount] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch('http://localhost:9090/api/stats') 
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch stats');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        setUserTemplateCount(data.donors);
+        setVolunteerTemplateCount(data.volunteers);
+        setCampaignTemplateCount(data.pastCampaigns);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error('Error fetching stats:', err);
+        setError(err.message);
+        setLoading(false);
+      });
+  }, []);
 
   const animatedUserCount = useAnimatedNumber(userTemplateCount);
   const animatedCampaignCount = useAnimatedNumber(campaignTemplateCount);
   const animatedVolunteerTemplateCount = useAnimatedNumber(volunteerTemplateCount);
+
+  if (loading) {
+    return <div className="stats-container">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="stats-container">Error: {error}</div>;
+  }
 
   return (
     <div className="stats-container flex justify-center">

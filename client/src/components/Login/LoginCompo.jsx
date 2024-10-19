@@ -20,11 +20,14 @@ function LoginCompo() {
       });
 
       if (response.data.token) {
-        setToken(response.data.token);
+        localStorage.setItem('token', response.data.token);
+        
         setError("");
         alert("Login Successful!");
-        
-        navigate("/dashboard");  
+        setToken(response.data.token);
+        if(response.data.userType == "admin"){
+          navigate("/dashboard");  
+        }
       }
     } catch (err) {
       setError("Invalid email or password");

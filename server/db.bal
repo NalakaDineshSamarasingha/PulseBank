@@ -1,6 +1,7 @@
 import ballerinax/mysql;
 import ballerina/sql;
 import ballerina/jwt;
+import ballerina/time;
 
 
 configurable int port = ?;
@@ -94,4 +95,40 @@ function generateJwtToken(string email) returns string|error {
     string|error jwtToken = jwt:issue(issuerConfig);
 
     return jwtToken;
+}
+function getStatsData() returns [int, int, int]|error {
+    sql:ParameterizedQuery donorQuery = `SELECT COUNT(*) AS count FROM donor`;
+    stream<CountResponse, sql:Error?> donorStream = dbClient->query(donorQuery);
+    int donorCount = 0;
+    error? e = donorStream.forEach(function(CountResponse donor) {
+        donorCount = donor.count;
+    });
+    check donorStream.close();
+    if e is error {
+        return e;
+    }
+    sql:ParameterizedQuery volunteerQuery = `SELECT COUNT(*) AS count FROM volunteer`;
+    stream<CountResponse, sql:Error?> volunteerStream = dbClient->query(volunteerQuery);
+    int volunteerCount = 0;
+    e = volunteerStream.forEach(function(CountResponse volunteer) {
+        volunteerCount = volunteer.count;
+    });
+    check volunteerStream.close();
+    if e is error {
+        return e;
+    }
+    time:Utc currentDate = time:utcNow();
+    string today = time:utcToString(currentDate).substring(0, 10); 
+    sql:ParameterizedQuery campaignQuery = `SELECT COUNT(*) AS count FROM campaign WHERE Date < ${today}`;
+    stream<CountResponse, sql:Error?> campaignStream = dbClient->query(campaignQuery);
+    int campaignCount = 0;
+    e = campaignStream.forEach(function(CountResponse campaign) {
+        campaignCount = campaign.count;
+    });
+    check campaignStream.close();
+    if e is error {
+        return e;
+    }
+
+    return [donorCount, volunteerCount, campaignCount];
 }
